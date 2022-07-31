@@ -28,13 +28,12 @@ RUN chmod +x winetricks
 RUN mv winetricks /usr/local/bin
 
 FROM winetricks as pre_winetricks
-RUN /usr/local/bin/winetricks win10
+RUN winetricks win7
 RUN apt-get clean
 # wine settings
 ENV WINEARCH win64
 ENV WINEDEBUG fixme-all
 ENV WINEPREFIX /wine
-ENV WINESERVER /usr/local/bin/wineserver32
 
 # Latest version from https://www.python.org/ftp/python/
 ARG PYTHON_VERSION=3.9.9
