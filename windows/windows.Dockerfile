@@ -28,7 +28,7 @@ RUN chmod +x winetricks
 RUN mv winetricks /usr/local/bin
 
 FROM winetricks as pre_winetricks
-RUN winetricks win10
+# RUN winetricks win10
 RUN apt-get clean
 # wine settings
 ENV WINEARCH win64
