@@ -34,7 +34,7 @@ ENV WINEDEBUG fixme-all
 ENV WINEPREFIX /wine
 
 # Latest version from https://www.python.org/ftp/python/
-ARG PYTHON_VERSION=3.9.9
+ENV PYTHON_VERSION=3.9.9
 
 FROM pre_winetricks as python
 RUN for msifile in `echo core dev doc exe launcher lib path pip tcltk test tools ucrt`; do \
@@ -64,7 +64,7 @@ ENV PYPI_URL=https://pypi.python.org/
 # PYPI index location
 ENV PYPI_INDEX_URL=https://pypi.python.org/simple
 # Requirements
-ARG PYINSTALLER_VERSION=5.3
+ENV PYINSTALLER_VERSION=5.3
 RUN wine cmd /c pip install pyinstaller==$PYINSTALLER_VERSION
 
 FROM build_requirements as source_mount

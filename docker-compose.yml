@@ -7,13 +7,13 @@ services:
       dockerfile: windows/windows.Dockerfile
       args:
         WINE_VERSION: wine-stable
-        PYTHON_VERSION: 3.9.9
-        PYINSTALLER_VERSION: 5.3
     environment:
       - WINEARCH=win64
       - WINEDEBUG=fixme-all
       - WINEPREFIX=/wine
       - SPEC_FILENAME=main.spec
+      - PYTHON_VERSION=3.9.9
+      - PYINSTALLER_VERSION=5.3
 
   unix:
     image: annihilator708/compile-juggernaut-unix
