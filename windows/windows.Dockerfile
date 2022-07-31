@@ -41,7 +41,7 @@ ARG PYTHON_VERSION=3.9.9
 FROM pre_winetricks as python
 RUN for msifile in `echo core dev doc exe launcher lib path pip tcltk test tools ucrt`; do \
     echo $msifile; \
-    wget -nv "https://www.python.org/ftp/python/$PYTHON_VERSION/amd64/${msifile}.msi"; \
+    wget -nv "https://www.python.org/ftp/python/${PYTHON_VERSION}/amd64/${msifile}.msi"; \
     wine msiexec /i "${msifile}.msi" /qb TARGETDIR=C:/Python; \
     rm ${msifile}.msi; \
 done
