@@ -23,9 +23,6 @@ FROM wine_gpg_key as wine
 RUN apt install $WINE_VERSION --install-recommends -y
 
 FROM wine as winetricks
-# RUN wget -nv https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
-# RUN chmod +x winetricks
-# RUN mv winetricks /usr/local/bin
 RUN apt -y install winetricks
 
 FROM winetricks as pre_winetricks
@@ -38,12 +35,11 @@ ENV WINEPREFIX /wine
 
 # Latest version from https://www.python.org/ftp/python/
 ARG PYTHON_VERSION=3.9.9
-ENV PYTHON_VERSION 3.9.9
 
 FROM pre_winetricks as python
 RUN for msifile in `echo core dev doc exe launcher lib path pip tcltk test tools ucrt`; do \
     echo $msifile; \
-    wget -nv "https://www.python.org/ftp/python/${PYTHON_VERSION}/amd64/${msifile}.msi"; \
+    wget -nv "https://www.python.org/ftp/python/$PYTHON_VERSION/amd64/${msifile}.msi"; \
     /usr/bin/wine msiexec /i "${msifile}.msi" /qb TARGETDIR=C:/Python; \
     rm ${msifile}.msi; \
 done
@@ -58,10 +54,11 @@ RUN echo 'assoc .py=PythonScript' | wine cmd
 RUN echo 'ftype PythonScript=c:\Python\python.exe "%1" %*' | wine cmd
 RUN while pgrep wineserver >/dev/null; do echo "Waiting for wineserver"; sleep 1; done
 RUN chmod +x /usr/bin/python /usr/bin/easy_install /usr/bin/pip /usr/bin/pyinstaller /usr/bin/pyupdater
-RUN (pip install -U pip --upgrade pip || true)
+RUN (pip install -U pip || true)
 RUN rm -rf /tmp/.wine-*
 
 FROM pip as build_requirements
+RUN wine cmd /c pip install --upgrade pip
 # PYPI repository location
 ENV PYPI_URL=https://pypi.python.org/
 # PYPI index location
