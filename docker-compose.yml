@@ -25,9 +25,3 @@ services:
         PYINSTALLER_VERSION: 5.3
     environment:
       - SPEC_FILENAME=main.spec
-
-  all:
-    image: alpine
-    depends_on:
-      - windows
-      - unix
