@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  windows:
+    image: compile_juggernaut_windows
+    build:
+      context: .
+      dockerfile: windows/windows.Dockerfile
+      args:
+        WINE_VERSION: wine-stable
+        PYTHON_VERSION: 3.9.9
+        PYINSTALLER_VERSION: 5.3
+    environment:
+      - WINEARCH=win64
+      - WINEDEBUG=fixme-all
+      - WINEPREFIX=/wine
+      - SPEC_FILENAME=main.spec
+
+  unix:
+    image: compile_juggernaut_unix
+    build:
+      context: .
+      dockerfile: unix/unix.Dockerfile
+      args:
+        PYTHON_VERSION: 3.9.9
+        PYINSTALLER_VERSION: 5.3
+    environment:
+      - SPEC_FILENAME=main.spec
