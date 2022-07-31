@@ -37,6 +37,7 @@ ENV WINEPREFIX /wine
 
 # Latest version from https://www.python.org/ftp/python/
 ARG PYTHON_VERSION=3.9.9
+ENV PYTHON_VERSION 3.9.9
 
 FROM pre_winetricks as python
 RUN for msifile in `echo core dev doc exe launcher lib path pip tcltk test tools ucrt`; do \
