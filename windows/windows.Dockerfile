@@ -23,12 +23,13 @@ FROM wine_gpg_key as wine
 RUN apt install $WINE_VERSION --install-recommends -y
 
 FROM wine as winetricks
-RUN wget -nv https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
-RUN chmod +x winetricks
-RUN mv winetricks /usr/local/bin
+# RUN wget -nv https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+# RUN chmod +x winetricks
+# RUN mv winetricks /usr/local/bin
+RUN apt -y install winetricks
 
 FROM winetricks as pre_winetricks
-RUN winetricks win7
+RUN winetricks win10
 RUN apt-get clean
 # wine settings
 ENV WINEARCH win64
