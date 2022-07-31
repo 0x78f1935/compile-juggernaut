@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   windows:
-    image: compile_juggernaut_windows
+    image: annihilator708/compile-juggernaut-windows
     build:
       context: .
       dockerfile: windows/windows.Dockerfile
@@ -16,7 +16,7 @@ services:
       - SPEC_FILENAME=main.spec
 
   unix:
-    image: compile_juggernaut_unix
+    image: annihilator708/compile-juggernaut-unix
     build:
       context: .
       dockerfile: unix/unix.Dockerfile

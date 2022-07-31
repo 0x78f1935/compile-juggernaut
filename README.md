@@ -3,6 +3,8 @@ Aims to compile python applications cross platform, requires docker and docker-c
 
 Inspired by [cdrx/pyinstaller-windows](https://hub.docker.com/r/cdrx/pyinstaller-windows)
 
+Compiles `Python 3.9.9` for **Unix** and **Windows** with `PyInstaller`
+
 ## Quickstart
 
 In your project which you would like to compile, create a `docker-compose.yml` file. 
@@ -11,8 +13,16 @@ An example could be something like:
 ```yml
 version: "3.9"
 services:
+
   windows:
-    image: windowsx64:latest
+    image: annihilator708/compile-juggernaut-windows:latest
+    volumes:
+      - ".:/src/"
+    environment:
+      - SPEC_FILENAME=main.spec
+
+  unix:
+    image: annihilator708/compile-juggernaut-unix:latest
     volumes:
       - ".:/src/"
     environment:
