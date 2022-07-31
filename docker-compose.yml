@@ -27,6 +27,7 @@ services:
       - SPEC_FILENAME=main.spec
 
   all:
+    image: alpine
     depends_on:
       - windows
       - unix
