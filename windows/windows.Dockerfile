@@ -34,6 +34,7 @@ RUN apt-get clean
 ENV WINEARCH win64
 ENV WINEDEBUG fixme-all
 ENV WINEPREFIX /wine
+ENV WINESERVER /usr/local/bin/wineserver32
 
 # Latest version from https://www.python.org/ftp/python/
 ARG PYTHON_VERSION=3.9.9
