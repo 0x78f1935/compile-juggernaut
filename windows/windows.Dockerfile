@@ -29,7 +29,7 @@ FROM winetricks as pre_winetricks
 RUN winetricks win10
 RUN apt-get clean
 # wine settings
-ENV WINEARCH win64
+ENV WINEARCH win32
 ENV WINEDEBUG fixme-all
 ENV WINEPREFIX /wine
 
