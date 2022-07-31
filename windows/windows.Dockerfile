@@ -56,13 +56,10 @@ RUN echo 'assoc .py=PythonScript' | wine cmd
 RUN echo 'ftype PythonScript=c:\Python\python.exe "%1" %*' | wine cmd
 RUN while pgrep wineserver >/dev/null; do echo "Waiting for wineserver"; sleep 1; done
 RUN chmod +x /usr/bin/python /usr/bin/easy_install /usr/bin/pip /usr/bin/pyinstaller /usr/bin/pyupdater
-RUN (pip install -U pip || true)
+RUN (pip install -U pip --upgrade pip || true)
 RUN rm -rf /tmp/.wine-*
 
-FROM pip as updated_pip
-RUN wine cmd /c pip install --upgrade pip
-
-FROM updated_pip as build_requirements
+FROM pip as build_requirements
 # PYPI repository location
 ENV PYPI_URL=https://pypi.python.org/
 # PYPI index location
