@@ -47,5 +47,6 @@ The project which is voume mounted can contain two `requirements.txt` files.
 - `build_requirements.txt` -> Contains pip libraries which are required to compile the application
 
 ## Sources
+- github -> [source code](https://github.com/0x78f1935/compile-juggernaut)
 - dockerhub -> [compile-juggernaut-unix](https://hub.docker.com/repository/docker/annihilator708/compile-juggernaut-unix)
 - dockerhub -> [compile-juggernaut-windows](https://hub.docker.com/repository/docker/annihilator708/compile-juggernaut-windows)
