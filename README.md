@@ -42,7 +42,7 @@ Two folders are generated when compiling.
 
 ## Project Requirements
 
-The project which is voume mounted can contain two `requirements.txt` files.
+The project which is volume mounted can contain two `requirements.txt` files.
 - `requirements.txt` -> Contains *[pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/https://pip.pypa.io/en/stable/cli/pip_freeze/)* requirements of your application
 - `build_requirements.txt` -> Contains pip libraries which are required to compile the application
 
