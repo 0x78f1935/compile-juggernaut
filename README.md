@@ -45,3 +45,7 @@ Two folders are generated when compiling.
 The project which is voume mounted can contain two `requirements.txt` files.
 - `requirements.txt` -> Contains *[pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/https://pip.pypa.io/en/stable/cli/pip_freeze/)* requirements of your application
 - `build_requirements.txt` -> Contains pip libraries which are required to compile the application
+
+## Sources
+- dockerhub -> [compile-juggernaut-unix](https://hub.docker.com/repository/docker/annihilator708/compile-juggernaut-unix)
+- dockerhub -> [compile-juggernaut-windows](https://hub.docker.com/repository/docker/annihilator708/compile-juggernaut-windows)
