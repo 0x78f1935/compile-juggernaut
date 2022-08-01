@@ -3,7 +3,7 @@ FROM ubuntu:22.04 as base
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt update && apt upgrade -y
-RUN apt install software-properties-common apt-transport-https wget -y
+RUN apt install software-properties-common apt-transport-https wget winbind git -y
 
 FROM base as architecture_support
 RUN dpkg --add-architecture i386
@@ -23,24 +23,26 @@ FROM wine_gpg_key as wine
 RUN apt install $WINE_VERSION --install-recommends -y
 
 FROM wine as winetricks
-RUN apt -y install winetricks
+RUN wget -nv https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+RUN chmod +x winetricks
+RUN mv winetricks /usr/local/bin
 
 FROM winetricks as pre_winetricks
 RUN winetricks win10
 RUN apt-get clean
 # wine settings
-ENV WINEARCH win32
+ENV WINEARCH win64
 ENV WINEDEBUG fixme-all
 ENV WINEPREFIX /wine
 
 # Latest version from https://www.python.org/ftp/python/
-ENV PYTHON_VERSION=3.9.9
+ARG PYTHON_VERSION=3.9.9
 
 FROM pre_winetricks as python
 RUN for msifile in `echo core dev doc exe launcher lib path pip tcltk test tools ucrt`; do \
     echo $msifile; \
-    wget -nv "https://www.python.org/ftp/python/$PYTHON_VERSION/amd64/${msifile}.msi"; \
-    /usr/bin/wine msiexec /i "${msifile}.msi" /qb TARGETDIR=C:/Python; \
+    wget -nv "https://www.python.org/ftp/python/${PYTHON_VERSION}/amd64/${msifile}.msi"; \
+    wine msiexec /i "${msifile}.msi" /qb TARGETDIR=C:/Python; \
     rm ${msifile}.msi; \
 done
 
@@ -54,17 +56,16 @@ RUN echo 'assoc .py=PythonScript' | wine cmd
 RUN echo 'ftype PythonScript=c:\Python\python.exe "%1" %*' | wine cmd
 RUN while pgrep wineserver >/dev/null; do echo "Waiting for wineserver"; sleep 1; done
 RUN chmod +x /usr/bin/python /usr/bin/easy_install /usr/bin/pip /usr/bin/pyinstaller /usr/bin/pyupdater
-RUN (pip install -U pip || true)
+RUN (pip install -U pip --upgrade pip || true)
 RUN rm -rf /tmp/.wine-*
 
 FROM pip as build_requirements
-RUN wine cmd /c python -m pip install --upgrade pip
 # PYPI repository location
 ENV PYPI_URL=https://pypi.python.org/
 # PYPI index location
 ENV PYPI_INDEX_URL=https://pypi.python.org/simple
 # Requirements
-ENV PYINSTALLER_VERSION=5.3
+ARG PYINSTALLER_VERSION=5.3
 RUN wine cmd /c pip install pyinstaller==$PYINSTALLER_VERSION
 
 FROM build_requirements as source_mount
