@@ -32,6 +32,8 @@ services:
 
 **SPEC_FILENAME:** *Can be generated with `pyi-makespec` and has different output depending on your project, for more info see the docs for [pyi-makespec](https://pyinstaller.org/en/stable/man/pyi-makespec.html)*
 
+**Tip:** *When generating your spec file, add the option `--add-data /src/*;./*`* to add your source code.
+
 With the `docker-compose.yml` file, use `docker-compose up --build` to start building!
 
 ## Output
